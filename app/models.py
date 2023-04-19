@@ -4,7 +4,6 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.sql.expression import text
 
-
 class Sensors(Base):
     __tablename__ = 'sensors'
     id = Column(Integer, primary_key=True, nullable=False)
@@ -28,4 +27,6 @@ class Readings(Base):
     reading = Column(String(40), nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
     sensor_id = Column(Integer, ForeignKey("sensors.id", ondelete="CASCADE"), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     sensor = relationship("Sensors", back_populates="readings")
+    owner = relationship("Users")

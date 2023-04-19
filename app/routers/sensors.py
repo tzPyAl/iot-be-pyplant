@@ -30,7 +30,9 @@ def get_sensor(id: int,
                             detail="Not authorized to perform required action.")
     readings = db.query(models.Readings).filter(models.Readings.sensor_id == sensor.id)
     if reading_name:
-        readings = readings.filter(models.Readings.name == reading_name)
+        readings = readings.filter(models.Readings.name.contains(reading_name))
+        if not readings.all():
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     sensor.readings = readings.all()
     return sensor
 

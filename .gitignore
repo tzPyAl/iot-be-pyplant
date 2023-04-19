@@ -5,6 +5,7 @@ __pycache__/
 
 #mine
 venv
+.env
 
 # C extensions
 *.so
