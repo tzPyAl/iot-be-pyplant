@@ -365,6 +365,33 @@
 			"name": "Readings",
 			"item": [
 				{
+					"name": "get readings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/readings",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"readings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "get reading",
 					"request": {
 						"auth": {
@@ -429,6 +456,43 @@
 							],
 							"path": [
 								"readings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create readings in bulk",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"readings\": [\n        {\n            \"name\": \"dht-11_temp\",\n            \"reading\": 23.43,\n            \"sensor_id\": 2\n        },\n        {\n            \"name\": \"dht-11_temp\",\n            \"reading\": 23.43,\n            \"sensor_id\": 2\n        },\n        {\n            \"name\": \"dht-11_hum\",\n            \"reading\": 67.43,\n            \"sensor_id\": 2\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/readings/add_bulk",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"readings",
+								"add_bulk"
 							]
 						}
 					},
