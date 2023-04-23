@@ -14,10 +14,10 @@ from fastapi import FastAPI
 SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.DATABASE_HOSTNAME}/{settings.DATABASE_NAME}_test"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
-TestingSessionLocal = sessionmaker(autoflush=False, autocommit=False, bind=engine)
-
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI(debug=True)
+
+TestingSessionLocal = sessionmaker(autoflush=False, autocommit=False, bind=engine)
 
 app.include_router(sensors.router)
 app.include_router(users.router)
