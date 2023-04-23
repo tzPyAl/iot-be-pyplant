@@ -41,11 +41,12 @@ jobs:
           python-version: "3.11"
       - name: set python path
         run: |
-          export PYTHONPATH="."
-          echo 'export PYTHONPATH=.' >> ~/.bashrc
+          echo "::set-env name=PYTHONPATH::home/runner/work/< iot-be-pyplant>"
       - name: update pip
         run: python -m pip install --upgrade pip
       - name: install all dependencies
         run: pip install -r requirements.txt
       - name: test with pytest
-        run: pytest
+        run: |
+          pip install pytest
+          pytest
