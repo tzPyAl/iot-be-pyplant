@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from app import models
-from app.database import engine
-from app.routers import sensors, users, auth, readings
-from app.config import settings
+from . import models
+from .database import engine
+from .routers import sensors, users, auth, readings
+
 
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI(debug=True)
