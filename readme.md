@@ -2,7 +2,7 @@ API for the PyPlant project.
 
 ### Tech stack:
 
-- [fastApi](https://fastapi.tiangolo.com/tutorial/) && postgres
+- [fastApi](https://fastapi.tiangolo.com/tutorial/) & postgres
 
 ### Run manually
 
