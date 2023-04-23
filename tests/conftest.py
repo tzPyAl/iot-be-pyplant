@@ -2,17 +2,27 @@ from fastapi.testclient import TestClient
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.main import app
+#from app.main import app
 from app.config import settings
 from app.database import get_db
 from app.database import Base
 from app.oath2 import create_access_token
 from app import models
+from app.routers import sensors, users, auth, readings
+from fastapi import FastAPI
 
 SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.DATABASE_HOSTNAME}/{settings.DATABASE_NAME}_test"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 TestingSessionLocal = sessionmaker(autoflush=False, autocommit=False, bind=engine)
+
+models.Base.metadata.create_all(bind=engine)
+app = FastAPI(debug=True)
+
+app.include_router(sensors.router)
+app.include_router(users.router)
+app.include_router(auth.router)
+app.include_router(readings.router)
 
 
 @pytest.fixture()
