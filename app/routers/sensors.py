@@ -57,7 +57,9 @@ def update_sensor(id: int,
     if _query.first().user_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, 
                             detail="Not authorized to perform required action.")
-    _query.update(payload.dict(), synchronize_session=False)
+    sensor = payload.dict()
+    sensor["id"] = id
+    _query.update(sensor, synchronize_session=False)
     db.commit()
     return _query.first()
 

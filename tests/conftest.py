@@ -40,7 +40,7 @@ def client(session):
 
 
 @pytest.fixture
-def test_user2(client):
+def test_user(client):
     user_data = {"email": "hello@gmail.com",
                  "password": "test1234"}
     res = client.post("/users/", json=user_data)
@@ -52,7 +52,7 @@ def test_user2(client):
 
 
 @pytest.fixture
-def test_user(client):
+def test_user2(client):
     user_data = {"email": "hello2@gmail.com",
                  "password": "test1234"}
     res = client.post("/users/", json=user_data)
@@ -71,5 +71,26 @@ def token(test_user):
 @pytest.fixture
 def authorized_client(client, token):
     client.headers = {**client.headers, "Authorization": f"Bearer {token}"}
-    print(client)
     return client
+
+@pytest.fixture
+def test_sensors(test_user, session):
+    session.add_all([models.Sensors(name="1st title", user_id=test_user['id']),
+                    models.Sensors(name="2nd title", user_id=test_user['id']), 
+                    models.Sensors(name="3rd title", user_id=test_user['id'])])
+    session.commit()
+
+    sensors = session.query(models.Sensors).all()
+    return sensors
+
+@pytest.fixture
+def test_readings(test_sensors, session):
+    for sensor in test_sensors:
+        session.add_all([models.Readings(name="dht11", reading="21.21", sensor_id=sensor.id, user_id=sensor.user_id),
+                        models.Readings(name="dht11", reading="21.21", sensor_id=sensor.id, user_id=sensor.user_id), 
+                        models.Readings(name="sht21", reading="21.21", sensor_id=sensor.id, user_id=sensor.user_id)])
+    session.commit()
+
+    readings = session.query(models.Readings).all()
+    print(f"OVDJE {readings}")
+    return readings

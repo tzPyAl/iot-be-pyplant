@@ -14,9 +14,9 @@ class UserResponse(BaseModel):
         orm_mode = True
 
 class Sensor(BaseModel):
-    id: int
+    id: Optional[int]
     name: str
-    created_at: datetime
+    #created_at: Optional[datetime]
     class Config:
         orm_mode = True
 
