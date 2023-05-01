@@ -3,6 +3,7 @@ API for the PyPlant project.
 ### Tech stack:
 
 - [fastApi](https://fastapi.tiangolo.com/tutorial/) & postgres
+- added cors and alembic, ready for deployment
 
 ### Run manually
 
